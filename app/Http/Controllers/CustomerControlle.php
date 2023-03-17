@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerControlle extends Controller
@@ -11,15 +12,8 @@ class CustomerControlle extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $customers = Customer::orderBy('id', 'desc')->get();
+        return response()->json($customers);
     }
 
     /**
@@ -27,7 +21,15 @@ class CustomerControlle extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customer = new Customer;
+
+        $customer->firstName = $request->firstName;
+        $customer->lastName = $request->lastName;
+        $customer->email = $request->email;
+
+        $customer->save();
+
+        return response()->json($customer);
     }
 
     /**
@@ -35,23 +37,24 @@ class CustomerControlle extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $customer = Customer::findOrFail($id);
+        return response()->json($customer);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(string $id, Request $request)
+    {   
+        $customer = Custumer::findOrFail($id);
+
+        $customer->firstName = $request->firstName;
+        $customer->lastName = $request->lastName;
+        $customer->email = $request->email;
+
+        $customer->save();
+
+        return response()->json($customer); 
     }
 
     /**
@@ -59,6 +62,8 @@ class CustomerControlle extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        return response()->json($customer);
     }
 }
