@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
-class CustomerControlle extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,15 +46,15 @@ class CustomerControlle extends Controller
      */
     public function update(string $id, Request $request)
     {   
-        $customer = Custumer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
 
-        $customer->firstName = $request->firstName;
-        $customer->lastName = $request->lastName;
-        $customer->email = $request->email;
+        $customer->firstName = $request[0];
+        $customer->lastName = $request[1];
+        $customer->email = $request[2];
 
         $customer->save();
 
-        return response()->json($customer); 
+        return response()->json($customer);
     }
 
     /**
