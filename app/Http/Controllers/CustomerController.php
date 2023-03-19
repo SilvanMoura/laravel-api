@@ -23,9 +23,9 @@ class CustomerController extends Controller
     {
         $customer = new Customer;
 
-        $customer->firstName = $request->firstName;
-        $customer->lastName = $request->lastName;
-        $customer->email = $request->email;
+        $customer->firstName = $request[0];
+        $customer->lastName = $request[1];
+        $customer->email = $request[2];
 
         $customer->save();
 
